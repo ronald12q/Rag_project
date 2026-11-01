@@ -6,7 +6,7 @@ from .schemas import query
 router = APIRouter()
 
 
-@router.post("/chat")
+@router.post("/pregunta")
 def pregunta(body: query):
     respuesta = pipelineResponse(body.pregunta)
     return {"respuesta": respuesta}
