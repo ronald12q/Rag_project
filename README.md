@@ -1,12 +1,12 @@
 # RAG ANDA
 
-RAG sobre la base de conocimiento de ANDA. API en FastAPI que recupera
-contexto con embeddings de Jina AI + Pinecone y genera la respuesta con Groq.
+RAG over the ANDA knowledge base. FastAPI API that retrieves
+context with Jina AI embeddings + Pinecone and generates the answer with Groq.
 
-## Requisitos
+## Requirements
 
 - Python 3.10+
-- Claves de Jina AI, Groq y Pinecone
+- Jina AI, Groq and Pinecone API keys
 
 ## Setup
 
@@ -14,32 +14,33 @@ contexto con embeddings de Jina AI + Pinecone y genera la respuesta con Groq.
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example app/.env   # y completa tus claves
+cp .env.example app/.env   # then fill in your keys
 ```
 
-Variables de entorno (`app/.env`):
+Environment variables (`app/.env`):
 
-| Key              | Uso                    |
-| ---------------- | ---------------------- |
-| jina_ai_key      | embeddings (Jina AI)   |
-| groq_api_key     | generación (Groq)      |
-| pinecone_api_key | índice vectorial       |
+| Key              | Usage             |
+| ---------------- | ----------------- |
+| jina_ai_key      | embeddings (Jina AI) |
+| groq_api_key     | generation (Groq) |
+| pinecone_api_key | vector index      |
 
-## Indexar
+## Indexing
 
 ```bash
-# 1. Crear el índice en Pinecone (solo una vez)
+# 1. Create the index in Pinecone (only once)
 python scripts/createIndex.py
 
-# 2. Cargar data/source.csv al índice
+# 2. Load data/source.csv into the index
 python scripts/indexar.py
 ```
 
-## Correr la API
+## Running the API
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-- `GET /` — health check
+- `GET /` — root, `{"message": "server running"}`
+- `GET /health` — health check, `{"status": "ok"}`
 - `POST /chat` — `{"pregunta": "..."}` → `{"respuesta": "..."}`
